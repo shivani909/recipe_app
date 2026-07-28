@@ -12,4 +12,6 @@ abstract class Routes {
 
   static const map="/map";
 
+  static const profile="/profile";
+
 }

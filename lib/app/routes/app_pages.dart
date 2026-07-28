@@ -1,16 +1,18 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:recipe_app/app/routes/app_routes.dart';
-import 'package:recipe_app/modules/analytics/bindings/analytics_binding.dart';
-import 'package:recipe_app/modules/analytics/views/analytics_view.dart';
-import 'package:recipe_app/modules/auth/bindings/auth_binding.dart';
-import 'package:recipe_app/modules/auth/bindings/home_binding.dart';
-import 'package:recipe_app/modules/auth/views/home_view.dart';
-import 'package:recipe_app/modules/auth/views/login_view.dart';
-import 'package:recipe_app/modules/auth/views/recipe_view.dart';
-import 'package:recipe_app/modules/auth/views/splash_view.dart';
-import 'package:recipe_app/modules/explore/bindings/recipe_binding.dart';
-import 'package:recipe_app/modules/map/bindings/map_binding.dart';
-import 'package:recipe_app/modules/map/views/map_view.dart';
+import 'package:recipe_app/app/modules/analytics/analytics_binding.dart';
+
+import 'package:recipe_app/app/modules/auth/auth_binding.dart';
+import 'package:recipe_app/app/modules/root/home_binding.dart';
+import 'package:recipe_app/app/modules/root/root_view.dart';
+import 'package:recipe_app/app/modules/auth/auth_view.dart';
+import 'package:recipe_app/app/modules/recipe/recipe_details.dart';
+import 'package:recipe_app/app/core/widgets/splash_screen.dart';
+import 'package:recipe_app/app/modules/recipe/recipe_binding.dart';
+import 'package:recipe_app/app/modules/map/map_binding.dart';
+import 'package:recipe_app/app/modules/map/map_view.dart';
+import 'package:recipe_app/app/modules/profile/profile_binding.dart';
+import 'package:recipe_app/app/modules/profile/profile_view.dart';
 
 class AppPages {
   static const initial = Routes.splash;
@@ -24,7 +26,7 @@ class AppPages {
     ),
 GetPage(
       name: Routes.login,
-      page: () => const LoginScreen(),
+      page: () => const AuthScreen(),
       binding: AuthBinding(),
     ),
     GetPage(
@@ -35,18 +37,20 @@ GetPage(
 
     GetPage(
     name: Routes.recipe,
-    page: ()=>const RecipeView(),
+    page: ()=>const RecipeDetails(),
     binding: RecipeBinding(),
 ),
-GetPage(
-  name: Routes.analytics,
-  page: () => const AnalyticsView(),
-  binding: AnalyticsBinding(),
-),
+
 GetPage(
   name: Routes.map,
-  page: () => const MapView(),
+  page: () => const GroceryFinderView(),
   binding: MapBinding(),
+),
+
+GetPage(
+  name: Routes.profile,
+  page: () => const ProfileView(),
+  binding: ProfileBinding(),
 ),
 
 
