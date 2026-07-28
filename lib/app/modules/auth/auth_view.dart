@@ -11,8 +11,7 @@ class AuthScreen extends GetView<AuthController> {
 
     return Scaffold(
       body: DecoratedBox(
-        // Subtle warm gradient instead of a flat grey background —
-        // matches the peach/orange palette used elsewhere in the app.
+   
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -27,8 +26,7 @@ class AuthScreen extends GetView<AuthController> {
               children: [
                 const Spacer(flex: 3),
 
-                // Icon anchored in a soft circle instead of floating
-                // bare on the background — gives it visual weight.
+             
                 Container(
                   width: 110,
                   height: 110,
@@ -109,13 +107,6 @@ class AuthScreen extends GetView<AuthController> {
   }
 }
 
-/// A properly-contrasted "Sign in with Google" button.
-///
-/// The previous version used the theme's default ElevatedButton style,
-/// which resolved to a pale pink-on-pink combination — low contrast and
-/// easy to miss as a tappable CTA. This uses the conventional white
-/// Google-button treatment (white surface, grey border, dark text, subtle
-/// elevation) so it reads clearly against any background.
 class _GoogleSignInButton extends StatelessWidget {
   const _GoogleSignInButton({required this.onPressed});
 
@@ -161,8 +152,7 @@ class _GoogleSignInButton extends StatelessWidget {
   }
 }
 
-/// Lightweight multi-color "G" so the button reads as a recognizable
-/// Google sign-in affordance without needing an image asset.
+
 class _GoogleG extends StatelessWidget {
   const _GoogleG();
 

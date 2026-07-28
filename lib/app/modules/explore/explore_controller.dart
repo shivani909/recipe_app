@@ -34,8 +34,7 @@ class ExploreController extends GetxController {
 
   int _skip = 0;
 
-  /// Total recipes available on the server for the current query
-  /// (resets on refresh, comes from the API response - not guessed).
+
   int _total = 0;
 
   bool get hasMore => _skip < _total;
@@ -78,14 +77,10 @@ class ExploreController extends GetxController {
 
     await _fetchPage();
 
-    // If a cuisine filter is active, the freshly fetched page might not
-    // contain any matches, leaving the visible `recipes` list too short
-    // to trigger further scroll-based pagination. Keep fetching until
-    // there's enough to fill the screen or there's nothing left.
+  
     await _ensureEnoughFilteredResults();
   }
 
-  /// Fetches exactly one page (limit/skip) and merges it into state.
   Future<void> _fetchPage() async {
     if (isLoading.value || isLoadingMore.value) return;
 
@@ -106,8 +101,7 @@ class ExploreController extends GetxController {
       _total = result.total;
       _skip += result.recipes.length;
 
-      // Defensive: if the server ever returns an empty page before our
-      // skip has caught up with total (bad data, race, etc.), stop.
+
       if (result.recipes.isEmpty) {
         _total = _skip;
       }

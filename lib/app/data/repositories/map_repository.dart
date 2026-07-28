@@ -1,12 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-/// Talks to Nominatim (OpenStreetMap's free reverse-geocoding service).
-/// Docs: https://nominatim.org/release-docs/latest/api/Reverse/
-///
-/// Deliberately uses the plain `http` package here instead of the app's
-/// shared Dio client, since Nominatim's usage policy requires a custom
-/// User-Agent header identifying the app (not tied to a base API config).
+
 class NominatimRepository {
   static const String _baseUrl = "https://nominatim.openstreetmap.org/reverse";
 
@@ -21,7 +16,7 @@ class NominatimRepository {
     final response = await http.get(
       uri,
       headers: {
-        // Nominatim's usage policy requires a descriptive User-Agent.
+       
         "User-Agent": "recipe_app_flutter_assignment/1.0",
       },
     );
@@ -51,8 +46,7 @@ class NominatimAddress {
   factory NominatimAddress.fromJson(Map<String, dynamic> json) {
     final address = json['address'] as Map<String, dynamic>? ?? {};
 
-    // Nominatim doesn't always populate "city" - fall back through the
-    // other locality-ish fields it commonly returns instead.
+   
     final city = address['city'] ??
         address['town'] ??
         address['village'] ??

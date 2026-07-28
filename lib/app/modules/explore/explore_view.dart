@@ -77,7 +77,7 @@ class ExploreView extends GetView<ExploreController> {
                 ),
               ),
 
-              /// Cuisine Chips
+            
               SliverToBoxAdapter(
                 child: SizedBox(
                   height: 50,
@@ -126,7 +126,7 @@ class ExploreView extends GetView<ExploreController> {
 
               const SliverToBoxAdapter(child: SizedBox(height: 12)),
 
-              /// Loading
+             
               if (controller.isLoading.value)
                 const SliverFillRemaining(
                   hasScrollBody: false,
@@ -134,7 +134,7 @@ class ExploreView extends GetView<ExploreController> {
                     child: CircularProgressIndicator(color: AppColors.primary),
                   ),
                 )
-              /// Empty
+             
               else if (controller.recipes.isEmpty)
                 SliverFillRemaining(
                   hasScrollBody: false,
@@ -147,9 +147,9 @@ class ExploreView extends GetView<ExploreController> {
                     onPressed: controller.refreshRecipes,
                   ),
                 )
-              /// Content
+              
               else ...[
-                /// Analytics Chart
+               
                 SliverToBoxAdapter(
                   child: Obx(() {
                     final entries = analyticsController.cuisineViews.entries
@@ -274,11 +274,10 @@ class ExploreView extends GetView<ExploreController> {
 
                             const SizedBox(height: 24),
 
-                            // Recipes Per Cuisine bar chart.
+                           
                             Builder(
                               builder: (context) {
-                                // Pick a clean interval so the grid doesn't
-                                // add awkward dead space above the tallest bar.
+                               
                                 final interval = maxValue <= 6
                                     ? 1
                                     : maxValue <= 12
@@ -374,8 +373,6 @@ class ExploreView extends GetView<ExploreController> {
                                             ),
                                           ),
 
-                                          // Names only appear on tap now (via the
-                                          // tooltip above) — no permanent labels.
                                           barGroups: List.generate(entries.length, (
                                             index,
                                           ) {

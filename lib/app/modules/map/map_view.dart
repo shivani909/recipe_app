@@ -4,13 +4,10 @@ import 'package:get/get.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:recipe_app/app/modules/map/map_controller.dart';
 
-
-
 class GroceryFinderView extends GetView<GroceryFinderController> {
   const GroceryFinderView({super.key});
 
-// India, used until GPS resolves
-  static const _fallbackCenter = LatLng(20.5937, 78.9629); 
+  static const _fallbackCenter = LatLng(20.5937, 78.9629);
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +33,10 @@ class GroceryFinderView extends GetView<GroceryFinderController> {
               options: MapOptions(
                 initialCenter: center,
                 initialZoom: 15,
-                onTap: (tapPosition, point) => controller.onMapPointSelected(point),
-                onLongPress: (tapPosition, point) => controller.onMapPointSelected(point),
+                onTap: (tapPosition, point) =>
+                    controller.onMapPointSelected(point),
+                onLongPress: (tapPosition, point) =>
+                    controller.onMapPointSelected(point),
               ),
               children: [
                 TileLayer(
@@ -66,7 +65,11 @@ class GroceryFinderView extends GetView<GroceryFinderController> {
                         point: controller.selectedPoint.value!,
                         width: 44,
                         height: 44,
-                        child: const Icon(Icons.location_pin, color: Colors.deepOrange, size: 44),
+                        child: const Icon(
+                          Icons.location_pin,
+                          color: Colors.deepOrange,
+                          size: 44,
+                        ),
                       ),
                   ],
                 ),
@@ -144,7 +147,10 @@ class _StoreDetailsSheet extends GetView<GroceryFinderController> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Selected Store", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
+            const Text(
+              "Selected Store",
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
             const SizedBox(height: 8),
             Text(store.address, style: const TextStyle(fontSize: 14)),
             const SizedBox(height: 6),
@@ -157,9 +163,16 @@ class _StoreDetailsSheet extends GetView<GroceryFinderController> {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(Icons.directions_walk, size: 18, color: Colors.deepOrange),
+                const Icon(
+                  Icons.directions_walk,
+                  size: 18,
+                  color: Colors.deepOrange,
+                ),
                 const SizedBox(width: 6),
-                Text(store.distanceLabel, style: const TextStyle(fontWeight: FontWeight.w600)),
+                Text(
+                  store.distanceLabel,
+                  style: const TextStyle(fontWeight: FontWeight.w600),
+                ),
               ],
             ),
             const SizedBox(height: 16),
@@ -167,8 +180,6 @@ class _StoreDetailsSheet extends GetView<GroceryFinderController> {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  // Returns the confirmed store to Recipe Details, which
-                  // shows: address, distance, and the confirmation message.
                   Get.back(result: store);
                 },
                 child: const Text("Confirm Store"),

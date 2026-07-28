@@ -10,13 +10,12 @@ import 'package:recipe_app/app/data/repositories/map_repository.dart';
 class GroceryFinderController extends GetxController {
   final NominatimRepository _nominatimRepo = NominatimRepository();
 
-  /// User's actual current location (fixed once fetched at start)
+ 
   final userLocation = Rxn<LatLng>();
   final isFetchingLocation = false.obs;
   final locationError = "".obs;
 
-  /// The single point the user tapped/long-pressed to pick as the store
-  /// Only one marker exists at a time - selecting a new point replaces this
+ 
   final selectedPoint = Rxn<LatLng>();
 
   final isReverseGeocoding = false.obs;
@@ -34,7 +33,7 @@ class GroceryFinderController extends GetxController {
     locationError.value = "";
 
     try {
-      //Runtime permission via permission_handler
+     
       final status = await Permission.location.request();
 
       if (status.isPermanentlyDenied) {
@@ -47,14 +46,14 @@ class GroceryFinderController extends GetxController {
         return;
       }
 
-      //Confirm the device's location service is actually on.
+      
       final serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) {
         locationError.value = "Please enable location services (GPS).";
         return;
       }
 
-      //Fetch current position
+     
       final position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -69,8 +68,7 @@ class GroceryFinderController extends GetxController {
 
   Future<void> retryLocationFetch() => _initLocation();
 
-  /// Called when the user taps or long-presses the map.
-  /// Replaces any previously selected marker (only one at a time).
+ 
   Future<void> onMapPointSelected(LatLng point) async {
     selectedPoint.value = point;
     selectedStore.value = null;

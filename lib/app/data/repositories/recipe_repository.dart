@@ -1,10 +1,6 @@
 import '../../core/api/api_client.dart';
 import '../models/recipe_model.dart';
 
-/// Wraps a page of recipes together with the pagination metadata DummyJSON
-/// returns (total, skip, limit). Returning `total` (not just the list) is
-/// what lets the controller know for certain when there's no more data,
-/// instead of guessing from `result.length < pageSize`.
 class RecipeListResult {
   final List<RecipeModel> recipes;
   final int total;
@@ -20,8 +16,7 @@ class RecipeListResult {
 }
 
 class RecipeRepository {
-  /// Fetch paginated recipes using limit & skip.
-  /// Uses /recipes for browsing, /recipes/search when a query is present.
+
   Future<RecipeListResult> fetchRecipes({
     required int limit,
     required int skip,

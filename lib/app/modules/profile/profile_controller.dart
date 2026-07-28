@@ -18,10 +18,10 @@ class ProfileController extends GetxController {
   final GetStorage _storage = GetStorage();
   final ImagePicker _picker = ImagePicker();
 
-  /// Logged in user
+
   User? get user => _auth.currentUser;
 
-  /// Local profile image path
+
   final RxnString localImagePath = RxnString();
 
   @override
@@ -31,7 +31,7 @@ class ProfileController extends GetxController {
     localImagePath.value = _storage.read<String>("profile_image");
   }
 
-  /// Pick image from gallery
+
   Future<void> pickProfileImage() async {
     try {
       final XFile? image = await _picker.pickImage(
@@ -60,7 +60,7 @@ class ProfileController extends GetxController {
 }
   }
 
-  /// Returns the image file if available
+
   File? get profileImage {
     if (localImagePath.value == null) return null;
 

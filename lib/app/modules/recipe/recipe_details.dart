@@ -22,8 +22,7 @@ class RecipeDetails extends GetView<RecipeController> {
             expandedHeight: 260,
             pinned: true,
             backgroundColor: AppColors.primary,
-            // Circular backing on the back button so it stays visible
-            // over both light and dark parts of the photo.
+          
             leading: Padding(
               padding: const EdgeInsets.all(8),
               child: CircleAvatar(
@@ -59,8 +58,7 @@ class RecipeDetails extends GetView<RecipeController> {
                       imageUrl: recipe.image,
                       fit: BoxFit.cover,
                     ),
-                    // Stronger, taller gradient so the title is always
-                    // legible regardless of what's in the photo.
+                   
                     Container(
                       decoration: const BoxDecoration(
                         gradient: LinearGradient(
@@ -104,9 +102,7 @@ class RecipeDetails extends GetView<RecipeController> {
 
                   const SizedBox(height: 15),
 
-                  // All meta info consolidated into one consistent chip
-                  // style — the "Easy" chip above and these used to look
-                  // like two different components.
+            
                   Wrap(
                     spacing: 10,
                     runSpacing: 10,
@@ -123,9 +119,7 @@ class RecipeDetails extends GetView<RecipeController> {
                     ],
                   ),
 
-                  // The old plain "20 min   15 min" row repeated the same
-                  // prep/cook numbers already shown in the chips above,
-                  // without even labeling which was which — removed.
+                
                   const SizedBox(height: 28),
 
                   const Text(
@@ -231,8 +225,7 @@ class RecipeDetails extends GetView<RecipeController> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          // Solid primary circle with white text reads far
-                          // better than the previous light-on-light number.
+                      
                           leading: CircleAvatar(
                             backgroundColor: AppColors.primary,
                             child: Text(
@@ -256,9 +249,7 @@ class RecipeDetails extends GetView<RecipeController> {
 
                   const SizedBox(height: 30),
 
-                  // Wishlist toggle — outlined by default, fills solid
-                  // once favorited so the state change is obvious at a
-                  // glance (not just an icon swap).
+           
                   SizedBox(
                     width: double.infinity,
                     height: 52,
@@ -306,8 +297,7 @@ class RecipeDetails extends GetView<RecipeController> {
 
                   const SizedBox(height: 12),
 
-                  // Primary conversion action for this screen — filled
-                  // solid so it clearly outranks the wishlist toggle.
+              
                   SizedBox(
                     width: double.infinity,
                     height: 52,
@@ -340,9 +330,7 @@ class RecipeDetails extends GetView<RecipeController> {
   }
 }
 
-/// Consistent chip used for difficulty, cuisine, prep time, cook time —
-/// previously "Easy" used a stock Chip while the others below used a
-/// different Chip configuration, so they didn't visually match.
+
 class _InfoChip extends StatelessWidget {
   const _InfoChip({required this.icon, required this.label});
 
@@ -377,9 +365,7 @@ class _InfoChip extends StatelessWidget {
   }
 }
 
-/// Circular +/- button with a visible outline and background — the old
-/// plain IconButton had no shape at all, so it read as decoration rather
-/// than a tappable control.
+
 class _ServingButton extends StatelessWidget {
   const _ServingButton({required this.icon, required this.onTap});
 

@@ -143,8 +143,7 @@ class RecipeCard extends StatelessWidget {
 
                       const Spacer(),
 
-                      // Matches the _InfoChip style used on the Recipe
-                      // Details screen, rather than a stock Chip.
+                    
                       Container(
                         padding: const EdgeInsets.symmetric(
                           horizontal: 10,

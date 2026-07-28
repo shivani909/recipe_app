@@ -116,9 +116,7 @@ class WishlistView extends GetView<WishlistController> {
                               ),
                             ),
                             const SizedBox(width: 8),
-                            // Delete now sits in a soft chip instead of a
-                            // bare icon — bigger touch target, less harsh
-                            // against the card background.
+                        
                             InkWell(
                               borderRadius: BorderRadius.circular(12),
                               onTap: () => controller.toggleWishlist(recipe),

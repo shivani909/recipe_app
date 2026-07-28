@@ -33,11 +33,7 @@ class HomeView extends GetView<HomeController> {
               selectedIcon: Icon(Icons.favorite),
               label: 'Wishlist',
             ),
-            //      NavigationDestination(
-            //   icon: Icon(Icons.analytics_outlined),
-            //   selectedIcon: Icon(Icons.analytics),
-            //   label: '',
-            // ),
+ 
             NavigationDestination(
               icon: Icon(Icons.person_outline),
               selectedIcon: Icon(Icons.person),

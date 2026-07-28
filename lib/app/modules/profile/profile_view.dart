@@ -9,8 +9,7 @@ class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Match the peach background used everywhere else in the app —
-      // the plain white/grey scaffold clashed with the themed bottom nav.
+ 
       backgroundColor: AppColors.scaffoldBackground,
       appBar: AppBar(
         title: const Text(
@@ -32,7 +31,7 @@ class ProfileView extends GetView<ProfileController> {
           padding: const EdgeInsets.fromLTRB(20, 24, 20, 20),
           child: Column(
             children: [
-              // ── Avatar with edit badge ─────────────────────────
+       
               GestureDetector(
                 onTap: controller.pickProfileImage,
                 child: Stack(
@@ -114,7 +113,7 @@ class ProfileView extends GetView<ProfileController> {
 
               const SizedBox(height: 32),
 
-              // ── Edit Profile — secondary/outlined action ────────
+
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -138,7 +137,7 @@ class ProfileView extends GetView<ProfileController> {
 
               const SizedBox(height: 12),
 
-              // ── Logout — themed error color, not stock red ──────
+          
               SizedBox(
                 width: double.infinity,
                 height: 52,
@@ -162,8 +161,7 @@ class ProfileView extends GetView<ProfileController> {
 
               const SizedBox(height: 60),
 
-              // Small footer so the large empty space below doesn't feel
-              // like unfinished UI.
+       
               Text(
                 "Recipe Explorer · v1.0.0",
                 style: TextStyle(fontSize: 12, color: Colors.grey.shade400),
