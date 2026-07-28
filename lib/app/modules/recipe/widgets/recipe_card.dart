@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/core/theme/app_colors.dart';
 import 'package:recipe_app/app/routes/app_routes.dart';
 import 'package:recipe_app/app/modules/analytics/analytics_controller.dart';
 import 'package:recipe_app/app/modules/wishlist/wishlist_controller.dart';
@@ -17,16 +18,18 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(12),
+      borderRadius: BorderRadius.circular(16),
       onTap: () {
         analyticsController.recordRecipeView(recipe.cuisine);
         Get.toNamed(Routes.recipe, arguments: recipe);
       },
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        color: Colors.white,
         elevation: 2,
+        shadowColor: Colors.black.withOpacity(.10),
         clipBehavior: Clip.antiAlias,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -40,11 +43,15 @@ class RecipeCard extends StatelessWidget {
                     width: double.infinity,
                     fit: BoxFit.cover,
                     placeholder: (_, __) =>
-                        Container(height: 220, color: Colors.grey.shade300),
+                        Container(height: 220, color: AppColors.cardBackground),
                     errorWidget: (_, __, ___) => Container(
                       height: 220,
-                      color: Colors.grey.shade300,
-                      child: const Icon(Icons.broken_image, size: 40),
+                      color: AppColors.cardBackground,
+                      child: const Icon(
+                        Icons.broken_image,
+                        size: 40,
+                        color: AppColors.textHint,
+                      ),
                     ),
                   ),
                 ),
@@ -57,12 +64,28 @@ class RecipeCard extends StatelessWidget {
                       recipe.id,
                     );
 
-                    return CircleAvatar(
-                      backgroundColor: Colors.white70,
+                    return Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(.15),
+                            blurRadius: 6,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
                       child: IconButton(
+                        constraints: const BoxConstraints(
+                          minWidth: 40,
+                          minHeight: 40,
+                        ),
+                        padding: EdgeInsets.zero,
                         icon: Icon(
                           isFavorite ? Icons.favorite : Icons.favorite_border,
-                          color: Colors.red,
+                          color: AppColors.error,
+                          size: 20,
                         ),
                         onPressed: () {
                           wishlistController.toggleWishlist(recipe);
@@ -75,35 +98,72 @@ class RecipeCard extends StatelessWidget {
             ),
 
             Padding(
-              padding: const EdgeInsets.all(12),
+              padding: const EdgeInsets.all(14),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     recipe.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                     style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 20,
+                      fontSize: 19,
+                      color: AppColors.textPrimary,
                     ),
                   ),
 
-                  const SizedBox(height: 8),
+                  const SizedBox(height: 6),
 
-                  Text(recipe.cuisine),
+                  Text(
+                    recipe.cuisine,
+                    style: const TextStyle(
+                      color: AppColors.textSecondary,
+                      fontSize: 14,
+                    ),
+                  ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 12),
 
                   Row(
                     children: [
-                      const Icon(Icons.star, color: Colors.orange, size: 18),
-
+                      const Icon(
+                        Icons.star_rounded,
+                        color: AppColors.accent,
+                        size: 19,
+                      ),
                       const SizedBox(width: 5),
-
-                      Text(recipe.rating.toString()),
+                      Text(
+                        recipe.rating.toString(),
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.textPrimary,
+                        ),
+                      ),
 
                       const Spacer(),
 
-                      Chip(label: Text(recipe.difficulty)),
+                      // Matches the _InfoChip style used on the Recipe
+                      // Details screen, rather than a stock Chip.
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.cardBackground,
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: AppColors.border),
+                        ),
+                        child: Text(
+                          recipe.difficulty,
+                          style: const TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.textPrimary,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ],

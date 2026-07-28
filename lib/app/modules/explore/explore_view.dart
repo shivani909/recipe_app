@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:recipe_app/app/core/theme/app_colors.dart';
 import 'package:recipe_app/app/core/widgets/empty_state_widget.dart';
 import 'package:recipe_app/app/modules/analytics/analytics_controller.dart';
 import 'package:recipe_app/app/modules/explore/explore_controller.dart';
@@ -15,8 +16,22 @@ class ExploreView extends GetView<ExploreController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Recipe Explorer")),
+      backgroundColor: AppColors.scaffoldBackground,
+      appBar: AppBar(
+        title: const Text(
+          "Recipe Explorer",
+          style: TextStyle(
+            fontWeight: FontWeight.w700,
+            color: AppColors.textPrimary,
+          ),
+        ),
+        centerTitle: true,
+        backgroundColor: AppColors.scaffoldBackground,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+      ),
       body: RefreshIndicator(
+        color: AppColors.primary,
         onRefresh: controller.refreshRecipes,
         child: Obx(
           () => CustomScrollView(
@@ -28,12 +43,32 @@ class ExploreView extends GetView<ExploreController> {
                   padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
                   child: TextField(
                     controller: controller.searchController,
+                    style: const TextStyle(color: AppColors.textPrimary),
                     decoration: InputDecoration(
                       hintText: "Search recipes...",
-                      prefixIcon: const Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                      hintStyle: TextStyle(color: AppColors.textHint),
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: AppColors.textSecondary,
                       ),
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(color: AppColors.border),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(color: AppColors.border),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(14),
+                        borderSide: const BorderSide(
+                          color: AppColors.primary,
+                          width: 1.6,
+                        ),
+                      ),
+                      contentPadding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                     onChanged: (value) {
                       controller.search.value = value;
@@ -54,15 +89,36 @@ class ExploreView extends GetView<ExploreController> {
                     itemBuilder: (context, index) {
                       final cuisine = controller.cuisines[index];
 
-                      return Obx(
-                        () => ChoiceChip(
+                      return Obx(() {
+                        final isSelected =
+                            controller.selectedCuisine.value == cuisine;
+
+                        return ChoiceChip(
                           label: Text(cuisine),
-                          selected: controller.selectedCuisine.value == cuisine,
+                          selected: isSelected,
                           onSelected: (_) {
                             controller.changeCuisine(cuisine);
                           },
-                        ),
-                      );
+                          showCheckmark: false,
+                          backgroundColor: Colors.white,
+                          selectedColor: AppColors.primary,
+                          side: BorderSide(
+                            color: isSelected
+                                ? AppColors.primary
+                                : AppColors.border,
+                          ),
+                          labelStyle: TextStyle(
+                            color: isSelected
+                                ? Colors.white
+                                : AppColors.textPrimary,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 13,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        );
+                      });
                     },
                   ),
                 ),
@@ -74,7 +130,9 @@ class ExploreView extends GetView<ExploreController> {
               if (controller.isLoading.value)
                 const SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Center(
+                    child: CircularProgressIndicator(color: AppColors.primary),
+                  ),
                 )
               /// Empty
               else if (controller.recipes.isEmpty)
@@ -116,7 +174,9 @@ class ExploreView extends GetView<ExploreController> {
 
                     return Card(
                       margin: const EdgeInsets.fromLTRB(16, 8, 16, 16),
+                      color: Colors.white,
                       elevation: 3,
+                      shadowColor: Colors.black.withOpacity(.08),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18),
                       ),
@@ -125,18 +185,19 @@ class ExploreView extends GetView<ExploreController> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
+                            const Row(
                               children: [
                                 Icon(
                                   Icons.analytics_rounded,
-                                  color: Theme.of(context).colorScheme.primary,
+                                  color: AppColors.primary,
                                 ),
-                                const SizedBox(width: 8),
-                                const Text(
+                                SizedBox(width: 8),
+                                Text(
                                   "Top Recipes",
                                   style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
+                                    color: AppColors.textPrimary,
                                   ),
                                 ),
                               ],
@@ -150,16 +211,17 @@ class ExploreView extends GetView<ExploreController> {
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary.withOpacity(.08),
+                                      color: AppColors.statChipBackground,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Column(
                                       children: [
                                         const Text(
                                           "Total Views",
-                                          style: TextStyle(fontSize: 12),
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondary,
+                                          ),
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
@@ -167,6 +229,7 @@ class ExploreView extends GetView<ExploreController> {
                                           style: const TextStyle(
                                             fontSize: 22,
                                             fontWeight: FontWeight.bold,
+                                            color: AppColors.textPrimary,
                                           ),
                                         ),
                                       ],
@@ -180,16 +243,17 @@ class ExploreView extends GetView<ExploreController> {
                                   child: Container(
                                     padding: const EdgeInsets.all(12),
                                     decoration: BoxDecoration(
-                                      color: Theme.of(
-                                        context,
-                                      ).colorScheme.primary.withOpacity(.08),
+                                      color: AppColors.statChipBackground,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     child: Column(
                                       children: [
                                         const Text(
                                           "Top Cuisine",
-                                          style: TextStyle(fontSize: 12),
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: AppColors.textSecondary,
+                                          ),
                                         ),
                                         const SizedBox(height: 4),
                                         Text(
@@ -198,6 +262,7 @@ class ExploreView extends GetView<ExploreController> {
                                           style: const TextStyle(
                                             fontSize: 17,
                                             fontWeight: FontWeight.bold,
+                                            color: AppColors.textPrimary,
                                           ),
                                         ),
                                       ],
@@ -210,17 +275,8 @@ class ExploreView extends GetView<ExploreController> {
                             const SizedBox(height: 24),
 
                             // Recipes Per Cuisine bar chart.
-                            // Expects `entries` (List<MapEntry<String, int>>), `maxValue` (int),
-                            // and `topCuisine` (MapEntry<String, int>) to be in scope.
                             Builder(
                               builder: (context) {
-                                final baseColor = Theme.of(
-                                  context,
-                                ).colorScheme.primary;
-                                final highlightColor = const Color(
-                                  0xFFE07A3F,
-                                ); // warm accent for the top cuisine
-
                                 // Pick a clean interval so the grid doesn't
                                 // add awkward dead space above the tallest bar.
                                 final interval = maxValue <= 6
@@ -260,7 +316,7 @@ class ExploreView extends GetView<ExploreController> {
                                                 .toDouble(),
                                             getDrawingHorizontalLine: (value) {
                                               return FlLine(
-                                                color: Colors.grey.shade300,
+                                                color: AppColors.chartGridLine,
                                                 strokeWidth: 1,
                                               );
                                             },
@@ -290,10 +346,9 @@ class ExploreView extends GetView<ExploreController> {
                                                         groupIndex == topIndex;
                                                     return BarTooltipItem(
                                                       "${entries[groupIndex].key}\n",
-                                                      TextStyle(
-                                                        color: Colors
-                                                            .grey
-                                                            .shade800,
+                                                      const TextStyle(
+                                                        color: AppColors
+                                                            .textSecondary,
                                                         fontWeight:
                                                             FontWeight.w600,
                                                         fontSize: 12,
@@ -304,8 +359,10 @@ class ExploreView extends GetView<ExploreController> {
                                                               "${entries[groupIndex].value} views",
                                                           style: TextStyle(
                                                             color: isTop
-                                                                ? highlightColor
-                                                                : baseColor,
+                                                                ? AppColors
+                                                                      .accent
+                                                                : AppColors
+                                                                      .primary,
                                                             fontWeight:
                                                                 FontWeight.bold,
                                                             fontSize: 13,
@@ -319,62 +376,55 @@ class ExploreView extends GetView<ExploreController> {
 
                                           // Names only appear on tap now (via the
                                           // tooltip above) — no permanent labels.
-                                          barGroups: List.generate(
-                                            entries.length,
-                                            (index) {
-                                              final isTop = index == topIndex;
+                                          barGroups: List.generate(entries.length, (
+                                            index,
+                                          ) {
+                                            final isTop = index == topIndex;
 
-                                              return BarChartGroupData(
-                                                x: index,
-                                                barRods: [
-                                                  BarChartRodData(
-                                                    toY: entries[index].value
-                                                        .toDouble(),
-                                                    width: 16,
-                                                    gradient: LinearGradient(
-                                                      begin:
-                                                          Alignment.topCenter,
-                                                      end: Alignment
-                                                          .bottomCenter,
-                                                      colors: isTop
-                                                          ? [
-                                                              highlightColor,
-                                                              highlightColor
-                                                                  .withOpacity(
-                                                                    .75,
-                                                                  ),
-                                                            ]
-                                                          : [
-                                                              baseColor,
-                                                              baseColor
-                                                                  .withOpacity(
-                                                                    .7,
-                                                                  ),
-                                                            ],
-                                                    ),
-                                                    borderRadius:
-                                                        const BorderRadius.only(
-                                                          topLeft:
-                                                              Radius.circular(
-                                                                5,
-                                                              ),
-                                                          topRight:
-                                                              Radius.circular(
-                                                                5,
-                                                              ),
-                                                        ),
-                                                    backDrawRodData:
-                                                        BackgroundBarChartRodData(
-                                                          show: true,
-                                                          toY: chartMaxY,
-                                                          color: Colors.grey
-                                                              .withOpacity(.06),
-                                                        ),
+                                            return BarChartGroupData(
+                                              x: index,
+                                              barRods: [
+                                                BarChartRodData(
+                                                  toY: entries[index].value
+                                                      .toDouble(),
+                                                  width: 16,
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: isTop
+                                                        ? [
+                                                            AppColors.accent,
+                                                            AppColors.accent
+                                                                .withOpacity(
+                                                                  .75,
+                                                                ),
+                                                          ]
+                                                        : [
+                                                            AppColors.primary,
+                                                            AppColors.primary
+                                                                .withOpacity(
+                                                                  .7,
+                                                                ),
+                                                          ],
                                                   ),
-                                                ],
-                                              );
-                                            },
-                                          ),
+                                                  borderRadius:
+                                                      const BorderRadius.only(
+                                                        topLeft:
+                                                            Radius.circular(5),
+                                                        topRight:
+                                                            Radius.circular(5),
+                                                      ),
+                                                  backDrawRodData:
+                                                      BackgroundBarChartRodData(
+                                                        show: true,
+                                                        toY: chartMaxY,
+                                                        color: AppColors
+                                                            .chartBackgroundTrack,
+                                                      ),
+                                                ),
+                                              ],
+                                            );
+                                          }),
 
                                           titlesData: FlTitlesData(
                                             topTitles: const AxisTitles(
@@ -397,12 +447,12 @@ class ExploreView extends GetView<ExploreController> {
                                                 getTitlesWidget: (value, meta) {
                                                   return Text(
                                                     value.toInt().toString(),
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 11,
                                                       fontWeight:
                                                           FontWeight.w500,
-                                                      color:
-                                                          Colors.grey.shade600,
+                                                      color: AppColors
+                                                          .textSecondary,
                                                     ),
                                                   );
                                                 },
@@ -419,11 +469,11 @@ class ExploreView extends GetView<ExploreController> {
                                       ),
                                     ),
                                     const SizedBox(height: 10),
-                                    Text(
+                                    const Text(
                                       "Tap a bar to see the cuisine name and views",
                                       style: TextStyle(
                                         fontSize: 11,
-                                        color: Colors.grey.shade500,
+                                        color: AppColors.textHint,
                                         fontStyle: FontStyle.italic,
                                       ),
                                     ),
