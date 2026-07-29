@@ -59,6 +59,81 @@ No API keys needed for recipes or maps — DummyJSON and Nominatim are both free
 - flutter_map + OpenStreetMap + Nominatim (reverse geocoding)
 - GetStorage (local persistence)
 
+## Project Structure
+ 
+```
+lib/
+├── main.dart
+├── app/
+│   ├── routes/
+│   │   ├── app_routes.dart          # route name constants
+│   │   └── app_pages.dart           # GetPage list + bindings
+│   │
+│   ├── data/
+│   │   ├── models/
+│   │   │   ├── recipe_model.dart
+│   │   │   ├── user_model.dart
+│   │   │   └── store_model.dart
+│   │   │
+│   │   ├
+│   │   │
+│   │   └── repositories/            # combine providers + local storage, expose clean methods
+│   │       ├── recipe_repository.dart
+│   │       ├── auth_repository.dart
+│   │       ├── wishlist_repository.dart     # GetStorage wrapper
+│   │       └── location_repository.dart     # geolocator + permission_handler
+│   │
+│   ├── modules/                     # one folder per screen/feature
+│   │   ├── auth/
+│   │   │   ├── login_controller.dart
+│   │   │   ├── login_binding.dart
+│   │   │   └── login_view.dart
+│   │   │
+│   │   ├── explore/
+│   │   │   ├── explore_controller.dart
+│   │   │   ├── explore_binding.dart
+│   │   │   ├── explore_view.dart
+│   │   │   └── widgets/
+│   │   │       ├── recipe_card.dart
+│   │   │       ├── cuisine_chip_filter.dart
+│   │   │       └── cuisine_analytics_chart.dart
+│   │   │
+│   │   ├── recipe_details/
+│   │   │   ├── recipe_details_controller.dart
+│   │   │   ├── recipe_details_binding.dart
+│   │   │   └── recipe_details_view.dart
+│   │   │
+│   │   ├── grocery_store_finder/
+│   │   │   ├── store_finder_controller.dart
+│   │   │   ├── store_finder_binding.dart
+│   │   │   └── store_finder_view.dart
+│   │   │
+│   │   ├── wishlist/
+│   │   │   ├── wishlist_controller.dart
+│   │   │   ├── wishlist_binding.dart
+│   │   │   └── wishlist_view.dart
+│   │   │
+│   │   ├── profile/
+│   │   │   ├── profile_controller.dart
+│   │   │   ├── profile_binding.dart
+│   │   │   └── profile_view.dart
+│   │   │
+│   │   └── root/                    # bottom nav shell
+│   │       ├── root_controller.dart
+│   │       └── root_view.dart
+│   │
+│   └── core/
+│       ├── theme/
+│       ├
+│       ├── constants/
+│       │   └── api_constants.dart
+│       └── widgets/                 # shared/reusable widgets
+│           ├── splash_view.dart
+│           ├── error_widget.dart
+│           └── empty_state_widget.dart
+```
+
+
 ## Notes
 
 - Wishlist and profile picture are stored locally on the device only.
